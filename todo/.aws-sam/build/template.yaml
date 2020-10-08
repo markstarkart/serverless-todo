@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: todo
+Description: Serverless Todo List
 Transform:
 - AWS::Serverless-2016-10-31
 Resources:
@@ -15,11 +15,11 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: SampleTable
+            Ref: ToDoListTable
       Environment:
         Variables:
-          SAMPLE_TABLE:
-            Ref: SampleTable
+          TODO_TABLE:
+            Ref: ToDoListTable
       Events:
         Api:
           Type: Api
@@ -39,11 +39,11 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: SampleTable
+            Ref: ToDoListTable
       Environment:
         Variables:
-          SAMPLE_TABLE:
-            Ref: SampleTable
+          TODO_TABLE:
+            Ref: ToDoListTable
       Events:
         Api:
           Type: Api
@@ -63,11 +63,11 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: SampleTable
+            Ref: ToDoListTable
       Environment:
         Variables:
-          SAMPLE_TABLE:
-            Ref: SampleTable
+          TODO_TABLE:
+            Ref: ToDoListTable
       Events:
         Api:
           Type: Api
@@ -75,15 +75,21 @@ Resources:
             Path: /
             Method: POST
       CodeUri: putItemFunction
-  SampleTable:
-    Type: AWS::Serverless::SimpleTable
+  ToDoListTable:
+    Type: AWS::DynamoDB::Table
     Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
+      TimeToLiveSpecification:
+        AttributeName: taskCompleted
+        Enabled: true
 Outputs:
   WebEndpoint:
     Description: API Gateway endpoint URL for Prod stage
