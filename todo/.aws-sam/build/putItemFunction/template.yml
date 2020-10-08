@@ -1,19 +1,12 @@
 # This is the SAM template that represents the architecture of your serverless application
 # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
 
-# The AWSTemplateFormatVersion identifies the capabilities of the template
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   Serverless Todo List
 
-# Transform section specifies one or more macros that AWS CloudFormation uses to process your template
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform:
 - AWS::Serverless-2016-10-31
-
-# Resources declares the AWS resources that you want to include in the stack
-# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -88,15 +81,18 @@ Resources:
           # Make table name accessible as environment variable from function code during execution
           TODO_TABLE: !Ref ToDoListTable
       Events:
-        Api:
+        CreateTask:
           Type: Api
           Properties:
             Path: /
             Method: POST
-  # Simple syntax to create a DynamoDB table with a single attribute primary key, more in
-  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlesssimpletable
-
-  # DynamoDB table to store item: {id: &lt;ID&gt;, name: &lt;NAME&gt;}
+        UpdateTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: Put
+  # Simple syntax to create a DynamoDB table with multiple attributes; id as primary key, task, and taskComplete with TTL enabled
+  # DynamoDB table to store item: {id: string, task: string, taskComplete: number}
   ToDoListTable:
     Type: AWS::DynamoDB::Table
     Properties:

@@ -81,11 +81,16 @@ Resources:
           # Make table name accessible as environment variable from function code during execution
           TODO_TABLE: !Ref ToDoListTable
       Events:
-        Api:
+        CreateTask:
           Type: Api
           Properties:
             Path: /
             Method: POST
+        UpdateTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: Put
   # Simple syntax to create a DynamoDB table with multiple attributes; id as primary key, task, and taskComplete with TTL enabled
   # DynamoDB table to store item: {id: string, task: string, taskComplete: number}
   ToDoListTable:

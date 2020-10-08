@@ -69,11 +69,16 @@ Resources:
           TODO_TABLE:
             Ref: ToDoListTable
       Events:
-        Api:
+        CreateTask:
           Type: Api
           Properties:
             Path: /
             Method: POST
+        UpdateTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: Put
       CodeUri: putItemFunction
   ToDoListTable:
     Type: AWS::DynamoDB::Table

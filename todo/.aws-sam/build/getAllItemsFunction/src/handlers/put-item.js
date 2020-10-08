@@ -12,7 +12,9 @@ const tableName = process.env.TODO_TABLE;
  */
 exports.putItemHandler = async (event) => {
     if (event.httpMethod !== 'POST') {
-        throw new Error(`postMethod only accepts POST method, you tried: ${event.httpMethod} method.`);
+        if (event.httpMethod !== 'PUT'){
+            throw new Error(`postMethod only accepts POST or PUT method, you tried: ${event.httpMethod} method.`);
+        }   
     }
     // All log statements are written to CloudWatch
     console.info('received:', event);
