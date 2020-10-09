@@ -8,20 +8,21 @@ class App extends Component {
   
   state = {
     isLoading : false,
-    tasks: [
-      {
-        "id": "id6",
-        "task": "task6"
-      },
-      {
-        "id": "id1",
-        "task": "task1"
-      },
-      {
-        "id": "id2",
-        "task": "task2"
-      }
-    ],
+    tasks: [],
+    // tasks: [
+    //   {
+    //     "id": "id6",
+    //     "task": "task6"
+    //   },
+    //   {
+    //     "id": "id1",
+    //     "task": "task1"
+    //   },
+    //   {
+    //     "id": "id2",
+    //     "task": "task2"
+    //   }
+    // ],
     completedTasks : [],
   }
  
@@ -38,6 +39,17 @@ class App extends Component {
       }, {});
     this.setState({ completedTasks : [...this.state.completedTasks, updatedTasks.completed] });
     this.setState({tasks : updatedTasks.todo});
+  }
+
+  async componentDidMount(){
+    const repsponse = await fetch(
+      "https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/"
+    )
+    .then((data) => data.json());
+    console.log(repsponse);
+    const todo = repsponse.filter((task) => !task.taskCompleted);
+    const complete = repsponse.filter((task) => task.taskCompleted);
+    this.setState({tasks: todo, completedTasks: complete, isLoading: false});
   }
 
   render () {

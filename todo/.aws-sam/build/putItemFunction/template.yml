@@ -7,6 +7,21 @@ Description: >-
 
 Transform:
 - AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: nodejs12.x
+    Timeout: 100
+    MemorySize: 128
+    Environment:
+      Variables:
+        TODO_TABLE: !Ref ToDoListTable
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors: 
+      AllowOrigin: "'*'"
+    
+  
 Resources:
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -16,18 +31,11 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/get-all-items.getAllItemsHandler
-      Runtime: nodejs12.x
-      MemorySize: 128
-      Timeout: 100
       Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the ToDoListTable
         - DynamoDBCrudPolicy:
             TableName: !Ref ToDoListTable
-      Environment:
-        Variables:
-          # Make table name accessible as environment variable from function code during execution
-          TODO_TABLE: !Ref ToDoListTable
       Events:
         Api:
           Type: Api
@@ -42,18 +50,11 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/get-by-id.getByIdHandler
-      Runtime: nodejs12.x
-      MemorySize: 128
-      Timeout: 100
       Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the ToDoListTable
         - DynamoDBCrudPolicy:
             TableName: !Ref ToDoListTable
-      Environment:
-        Variables:
-          # Make table name accessible as environment variable from function code during execution
-          TODO_TABLE: !Ref ToDoListTable
       Events:
         Api:
           Type: Api
@@ -68,18 +69,11 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/put-item.putItemHandler
-      Runtime: nodejs12.x
-      MemorySize: 128
-      Timeout: 100
       Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the ToDoListTable
         - DynamoDBCrudPolicy:
             TableName: !Ref ToDoListTable
-      Environment:
-        Variables:
-          # Make table name accessible as environment variable from function code during execution
-          TODO_TABLE: !Ref ToDoListTable
       Events:
         CreateTask:
           Type: Api

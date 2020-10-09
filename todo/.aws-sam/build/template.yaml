@@ -2,23 +2,29 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: Serverless Todo List
 Transform:
 - AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Runtime: nodejs12.x
+    Timeout: 100
+    MemorySize: 128
+    Environment:
+      Variables:
+        TODO_TABLE:
+          Ref: ToDoListTable
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors:
+      AllowOrigin: '''*'''
 Resources:
   getAllItemsFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/get-all-items.getAllItemsHandler
-      Runtime: nodejs12.x
-      MemorySize: 128
-      Timeout: 100
       Description: A simple example includes a HTTP get method to get all items from
         a DynamoDB table.
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: ToDoListTable
-      Environment:
-        Variables:
-          TODO_TABLE:
             Ref: ToDoListTable
       Events:
         Api:
@@ -31,18 +37,11 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/get-by-id.getByIdHandler
-      Runtime: nodejs12.x
-      MemorySize: 128
-      Timeout: 100
       Description: A simple example includes a HTTP get method to get one item by
         id from a DynamoDB table.
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: ToDoListTable
-      Environment:
-        Variables:
-          TODO_TABLE:
             Ref: ToDoListTable
       Events:
         Api:
@@ -55,18 +54,11 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/put-item.putItemHandler
-      Runtime: nodejs12.x
-      MemorySize: 128
-      Timeout: 100
       Description: A simple example includes a HTTP post method to add one item to
         a DynamoDB table.
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
-            Ref: ToDoListTable
-      Environment:
-        Variables:
-          TODO_TABLE:
             Ref: ToDoListTable
       Events:
         CreateTask:
