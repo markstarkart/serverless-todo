@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem, Alert, } from 'reactstrap';
 import './App.css';
-import ToDoTaskList from './views/todoTaskList'
-import SelectedTaskList from './views/selectTaskList'
+import ToDoTaskList from './views/todoTaskList';
+import SelectedTaskList from './views/selectTaskList';
+import AddTask from './views/addTask';
 
 
 
@@ -13,8 +14,8 @@ class App extends Component {
     
     this.updateTask = this.updateTask.bind(this);
     this.getTasks = this.getTasks.bind(this);
-    this.selectedTask= this.selectTask.bind(this);
-
+    this.selectedTask = this.selectTask.bind(this);
+    this.addTask = this.addTask.bind(this);
     this.state = {
       isLoading : false,
       tasks:[],
@@ -25,6 +26,9 @@ class App extends Component {
     };
   };
  
+  addTask(){
+    console.log('hi')
+  }
   updateTask(tasks,id){
     console.log(tasks, id)
     const updatedTasks = tasks.reduce(({}, task) => {
@@ -89,6 +93,7 @@ class App extends Component {
                 <Col md="6">
                   <ListGroup className="text-center">
                     <h4>Tasks</h4>
+                    <AddTask addTask={this.addTask}></AddTask>
                     {this.state.todoTasks.length === 0 ? (
                       <ListGroupItem>
                         <Alert color="success">All Tasks Complete!</Alert>
@@ -121,15 +126,14 @@ class App extends Component {
                         <Alert color="danger">Get To Work!</Alert>
                       </ListGroupItem>
                     ) : this.state.completedTasks.map(task => (
-                      <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>)
+                        <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>
+                      )
                     )}
                   </ListGroup>
                 </Col>
               </Row>
             </Col>
           </Row>
-
-          <Row></Row>
         </Container>
       );
   }
