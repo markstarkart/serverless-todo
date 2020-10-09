@@ -14,7 +14,7 @@ class App extends Component {
  
   updateTask(id){
 
-    let updatedTasks = [...this.state.tasks].reduce((tasks, task) => {
+    const updatedTasks = [...this.state.tasks].reduce((tasks, task) => {
       
       if (task.id === id) {
         tasks['completed'] = task;
