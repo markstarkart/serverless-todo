@@ -20,7 +20,8 @@
     "build": "react-scripts build",
     "deploy": "aws s3 sync build/ s3://serverless-todo-app-2020",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "s3": "npm run build && npm run deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
