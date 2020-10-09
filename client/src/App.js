@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Button, Col, ListGroup, ListGroupItem, Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faEdit } from '@fortawesome/free-solid-svg-icons'
 import './App.css';
 
 class App extends Component {
@@ -9,20 +9,6 @@ class App extends Component {
   state = {
     isLoading : false,
     tasks: [],
-    // tasks: [
-    //   {
-    //     "id": "id6",
-    //     "task": "task6"
-    //   },
-    //   {
-    //     "id": "id1",
-    //     "task": "task1"
-    //   },
-    //   {
-    //     "id": "id2",
-    //     "task": "task2"
-    //   }
-    // ],
     completedTasks : [],
   }
  
@@ -60,19 +46,23 @@ class App extends Component {
     if (isLoading) 
       return (<div>Loading...</div>);
 
-      let tasks = allTasks.map(task => <ListGroupItem key={task.id}>
-        <Row>
-          <Col>
-            <Alert color="dark">
-              {task.task}
-            </Alert>
-          </Col>
-          <Col md="1">
-            <Button className="btn btn-sm btn-success" onClick={() => this.updateTask(task.id)}><FontAwesomeIcon icon={faCheckCircle} /></Button>
-          </Col>
-        </Row>
-      </ListGroupItem>
-      );
+      let tasks = allTasks.map((task) => (
+        <ListGroupItem color="secodary" key={task.id}>
+          <Row>
+            <Col>
+              <Alert color="dark">{task.task}</Alert>
+            </Col>
+            <Col md="1">
+              <Button color="warning" onClick={() => this.updateTask(task.id)}>
+                <FontAwesomeIcon icon={faEdit} />
+              </Button>
+              <Button color="success" onClick={() => this.updateTask(task.id)}>
+                <FontAwesomeIcon icon={faCheckCircle} />
+              </Button>
+            </Col>
+          </Row>
+        </ListGroupItem>
+      ));
 
       const completedTasks = this.state.completedTasks.map(task => <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>)
 
