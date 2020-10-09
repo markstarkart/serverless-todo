@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Button} from 'reactstrap';
+import { Container, Row, Button, Col, ListGroup, ListGroupItem, Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import './App.css';
@@ -48,62 +48,52 @@ class App extends Component {
     if (isLoading) 
       return (<div>Loading...</div>);
 
-      let tasks = allTasks.map(task => <tr key={task.id}>
-        <td>{task.task}</td>
-        <td><Button className="btn btn-sm btn-success" onClick={() => this.updateTask(task.id)}><FontAwesomeIcon icon={faCheckCircle} /></Button></td>
-      </tr>
+      let tasks = allTasks.map(task => <ListGroupItem key={task.id}>
+        <Row>
+          <Col>
+            <Alert color="dark">
+              {task.task}
+            </Alert>
+          </Col>
+          <Col md="1">
+            <Button className="btn btn-sm btn-success" onClick={() => this.updateTask(task.id)}><FontAwesomeIcon icon={faCheckCircle} /></Button>
+          </Col>
+        </Row>
+      </ListGroupItem>
       );
 
-      const completedTasks = this.state.completedTasks.map(task => <tr key={task.id}><td>{task.task}</td></tr>)
+      const completedTasks = this.state.completedTasks.map(task => <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>)
+
       return ( 
-        <div className="container border border-secondary rounded center">
-          <div className="row">
-            <div className="col-12">
-              <h4>Todo List</h4>
-            </div>
-          </div>
 
-          <div className="row">
-            <div className=".col-l-12 center text-center">
-              <Table dark responsive striped bordered hover>
-                <thead>
-                  <tr>
-                    <th scope="row" colSpan="12">Task</th>
-                    <th scope="row">Completed?</th>
-                  </tr>
-                </thead>
-
-              <tbody>
-                  {this.state.tasks.length === 0 ? <tr><td colSpan="9">All Tasks Complete!</td></tr> : tasks}
-              </tbody>
-              </Table>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <h4>Recently Completed List</h4>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className=".col-l-12 center text-center">
-                <Table dark responsive striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th scope="row">Task</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {this.state.completedTasks.length === 0 ? <tr><td colSpan="9">Get To Work!</td></tr> : completedTasks}
-                  </tbody>
-                </Table>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
+        <Container>
+            <Row>
+              <Col className='text-center'>
+                <h1>Todo List</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Row>
+                  <Col md="6">
+                    <ListGroup className='text-center'>
+                      <h4>Tasks</h4>
+                      {this.state.tasks.length === 0 ? <ListGroupItem><Alert color="success">All Tasks Complete!</Alert></ListGroupItem> : tasks}
+                    </ListGroup>
+                  </Col>
+                  <Col md="6">
+                    <ListGroup className='text-center'>
+                      <h4>Completed Tasks</h4>
+                      {this.state.completedTasks.length === 0 ? <ListGroupItem><Alert color="danger">Get To Work!</Alert></ListGroupItem> : completedTasks}
+                    </ListGroup>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <Row>
+              
+            </Row>
+        </Container>
       );
   }
 }
