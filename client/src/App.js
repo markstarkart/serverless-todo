@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
-import { Container, Row, Button, Col, ListGroup, ListGroupItem, Alert, ListGroupItemText } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faEdit, faList, faDotCircle } from '@fortawesome/free-solid-svg-icons'
+import { Container, Row, 
+  // Button,
+   Col, ListGroup, ListGroupItem, Alert, } from 'reactstrap';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faCheckCircle, faEdit, faList, faDotCircle } from '@fortawesome/free-solid-svg-icons'
 import './App.css';
+import ToDoTaskList from './views/todoTaskList'
+import SelectedTaskList from './views/selectTaskList'
+
+
 
 class App extends Component {
   
-  state = {
-    isLoading : false,
-    tasks:[],
-    renderTasks: [],
-    todoTasks: [],
-    completedTasks : [],
+  constructor(props){
+    super(props);
+    
+    this.updateTask = this.updateTask.bind(this);
+    this.getTasks = this.getTasks.bind(this);
+    this.selectedTask= this.selectTask.bind(this);
+
+    this.state = {
+      isLoading : false,
+      tasks:[],
+      renderTasks: [],
+      todoTasks: [],
+      completedTasks : [],
+      newTask: {},
+    }
   }
  
   updateTask(id){
@@ -32,6 +47,7 @@ class App extends Component {
       todoTasks: updatedTasks.todo,
       renderTasks:updatedTasks.todo,
     });
+    console.log(this.state)
   }
 
   selectTask(id){
@@ -63,57 +79,57 @@ class App extends Component {
 
   render () {
     
-    const isLoading = this.state.isLoading;
-    const allTasks = this.state.renderTasks;
+    // const isLoading = this.state.isLoading;
+    // const allTasks = this.state.renderTasks;
 
-    if (isLoading) 
+    if (this.state.isLoading) 
       return (<div>Loading...</div>);
 
-  let tasks =
-    allTasks.length === 1 ? (
-      <ListGroupItem>
-        <Row>
-          <Col>
-            <Alert color="dark">{allTasks[0].task}</Alert>
-          </Col>
-          <Col md="1">
-            <Button
-              color="success"
-              onClick={() => this.updateTask(allTasks[0].id)}>
-              <FontAwesomeIcon icon={faCheckCircle} />
-            </Button>
-            <Button color="warning" onClick={() => this.getTasks()}>
-              <FontAwesomeIcon icon={faList} />
-            </Button>
-            <Button
-              color="info"
-              onClick={() => this.updateTask(allTasks[0].id)}>
-              <FontAwesomeIcon icon={faEdit} />
-            </Button>
-          </Col>
-        </Row>
-      </ListGroupItem>
-    ) : (
-      allTasks.map((task) => (
-        <ListGroupItem key={task.id}>
-          <Row>
-            <Col>
-              <Alert color="dark">{task.task}</Alert>
-            </Col>
-            <Col md="1">
-              <Button color="warning" onClick={() => this.selectTask(task.id)}>
-                <FontAwesomeIcon icon={faDotCircle} />
-              </Button>
-              <Button color="success" onClick={() => this.updateTask(task.id)}>
-                <FontAwesomeIcon icon={faCheckCircle} />
-              </Button>
-            </Col>
-          </Row>
-        </ListGroupItem>
-      ))
-    );
+  // let tasks =
+  //   allTasks.length === 1 ? (
+  //     <ListGroupItem>
+  //       <Row>
+  //         <Col>
+  //           <Alert color="dark">{allTasks[0].task}</Alert>
+  //         </Col>
+  //         <Col md="1">
+  //           <Button
+  //             color="success"
+  //             onClick={() => this.updateTask(allTasks[0].id)}>
+  //             <FontAwesomeIcon icon={faCheckCircle} />
+  //           </Button>
+  //           <Button color="warning" onClick={() => this.getTasks()}>
+  //             <FontAwesomeIcon icon={faList} />
+  //           </Button>
+  //           <Button
+  //             color="info"
+  //             onClick={() => this.updateTask(allTasks[0].id)}>
+  //             <FontAwesomeIcon icon={faEdit} />
+  //           </Button>
+  //         </Col>
+  //       </Row>
+  //     </ListGroupItem>
+  //   ) : (
+  //     allTasks.map((task) => (
+  //       <ListGroupItem key={task.id}>
+  //         <Row>
+  //           <Col>
+  //             <Alert color="dark">{task.task}</Alert>
+  //           </Col>
+  //           <Col md="1">
+  //             <Button color="warning" onClick={() => this.selectTask(task.id)}>
+  //               <FontAwesomeIcon icon={faDotCircle} />
+  //             </Button>
+  //             <Button color="success" onClick={() => this.updateTask(task.id)}>
+  //               <FontAwesomeIcon icon={faCheckCircle} />
+  //             </Button>
+  //           </Col>
+  //         </Row>
+  //       </ListGroupItem>
+  //     ))
+  //   );
 
-      const completedTasks = this.state.completedTasks.map(task => <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>)
+      // const completedTasks = this.state.completedTasks.map(task => <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>)
 
       return (
         <Container>
@@ -132,9 +148,20 @@ class App extends Component {
                       <ListGroupItem>
                         <Alert color="success">All Tasks Complete!</Alert>
                       </ListGroupItem>
-                    ) : (
-                      tasks
-                    )}
+                    ) : this.state.renderTasks.length === 1 ? (
+                      <SelectedTaskList 
+                        getTasks={this.getTasks}
+                        updateTask={this.updateTask}
+                        task={this.state.renderTasks[0]}
+                      ></SelectedTaskList>
+                      ) : this.state.renderTasks.map(task => 
+                        <ToDoTaskList key={task.id}
+                          updateTask={this.updateTask}
+                          selectTask={this.selectedTask}
+                          task={task.task}
+                        ></ToDoTaskList>
+                        )
+                    }
                   </ListGroup>
                 </Col>
                 <Col md="6">
@@ -144,8 +171,8 @@ class App extends Component {
                       <ListGroupItem>
                         <Alert color="danger">Get To Work!</Alert>
                       </ListGroupItem>
-                    ) : (
-                      completedTasks
+                    ) : this.state.completedTasks.map(task => (
+                      <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>)
                     )}
                   </ListGroup>
                 </Col>
