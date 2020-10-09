@@ -72,26 +72,27 @@ class App extends Component {
                 <h1>Todo List</h1>
               </Col>
             </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col md="6">
+                      <ListGroup className='text-center'>
+                        <h4>Tasks</h4>
+                        {this.state.tasks.length === 0 ? <ListGroupItem><Alert color="success">All Tasks Complete!</Alert></ListGroupItem> : tasks}
+                      </ListGroup>
+                    </Col>
+                    <Col md="6">
+                      <ListGroup className='text-center'>
+                        <h4>Completed Tasks</h4>
+                        {this.state.completedTasks.length === 0 ? <ListGroupItem><Alert color="danger">Get To Work!</Alert></ListGroupItem> : completedTasks}
+                      </ListGroup>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+
             <Row>
-              <Col>
-                <Row>
-                  <Col md="6">
-                    <ListGroup className='text-center'>
-                      <h4>Tasks</h4>
-                      {this.state.tasks.length === 0 ? <ListGroupItem><Alert color="success">All Tasks Complete!</Alert></ListGroupItem> : tasks}
-                    </ListGroup>
-                  </Col>
-                  <Col md="6">
-                    <ListGroup className='text-center'>
-                      <h4>Completed Tasks</h4>
-                      {this.state.completedTasks.length === 0 ? <ListGroupItem><Alert color="danger">Get To Work!</Alert></ListGroupItem> : completedTasks}
-                    </ListGroup>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-            <Row>
-              
+  
             </Row>
         </Container>
       );
