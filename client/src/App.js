@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, 
-  // Button,
-   Col, ListGroup, ListGroupItem, Alert, } from 'reactstrap';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCheckCircle, faEdit, faList, faDotCircle } from '@fortawesome/free-solid-svg-icons'
+import { Container, Row, Col, ListGroup, ListGroupItem, Alert, } from 'reactstrap';
 import './App.css';
 import ToDoTaskList from './views/todoTaskList'
 import SelectedTaskList from './views/selectTaskList'
@@ -26,18 +22,15 @@ class App extends Component {
       todoTasks: [],
       completedTasks : [],
       newTask: {},
-    }
-  }
+    };
+  };
  
-  updateTask(id){
-
-    const updatedTasks = [...this.state.todoTasks].reduce((tasks, task) => {
-      
+  updateTask(tasks,id){
+    console.log(tasks, id)
+    const updatedTasks = tasks.reduce(({}, task) => {
       if (task.id === id) {
         tasks['completed'] = task;
-        tasks["todo"] = [...this.state.todoTasks].filter(
-          (task) => task.id !== id
-        );
+        tasks["todo"] = tasks.filter(task => task.id !== id);
         console.log(tasks)
         return tasks;
       } else return tasks;
@@ -50,9 +43,10 @@ class App extends Component {
     console.log(this.state)
   }
 
-  selectTask(id){
-    const selectedTask = [...this.state.tasks].filter(task => task.id === id);
-    console.log(selectedTask)
+  selectTask(tasks,id){
+    console.log(tasks, id)
+    const selectedTask = tasks.filter(task => task.id === id);
+    console.log('selectTask()',selectedTask)
     this.setState({ renderTasks: selectedTask });
   }
 
@@ -79,57 +73,8 @@ class App extends Component {
 
   render () {
     
-    // const isLoading = this.state.isLoading;
-    // const allTasks = this.state.renderTasks;
-
     if (this.state.isLoading) 
       return (<div>Loading...</div>);
-
-  // let tasks =
-  //   allTasks.length === 1 ? (
-  //     <ListGroupItem>
-  //       <Row>
-  //         <Col>
-  //           <Alert color="dark">{allTasks[0].task}</Alert>
-  //         </Col>
-  //         <Col md="1">
-  //           <Button
-  //             color="success"
-  //             onClick={() => this.updateTask(allTasks[0].id)}>
-  //             <FontAwesomeIcon icon={faCheckCircle} />
-  //           </Button>
-  //           <Button color="warning" onClick={() => this.getTasks()}>
-  //             <FontAwesomeIcon icon={faList} />
-  //           </Button>
-  //           <Button
-  //             color="info"
-  //             onClick={() => this.updateTask(allTasks[0].id)}>
-  //             <FontAwesomeIcon icon={faEdit} />
-  //           </Button>
-  //         </Col>
-  //       </Row>
-  //     </ListGroupItem>
-  //   ) : (
-  //     allTasks.map((task) => (
-  //       <ListGroupItem key={task.id}>
-  //         <Row>
-  //           <Col>
-  //             <Alert color="dark">{task.task}</Alert>
-  //           </Col>
-  //           <Col md="1">
-  //             <Button color="warning" onClick={() => this.selectTask(task.id)}>
-  //               <FontAwesomeIcon icon={faDotCircle} />
-  //             </Button>
-  //             <Button color="success" onClick={() => this.updateTask(task.id)}>
-  //               <FontAwesomeIcon icon={faCheckCircle} />
-  //             </Button>
-  //           </Col>
-  //         </Row>
-  //       </ListGroupItem>
-  //     ))
-  //   );
-
-      // const completedTasks = this.state.completedTasks.map(task => <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>)
 
       return (
         <Container>
@@ -153,12 +98,16 @@ class App extends Component {
                         getTasks={this.getTasks}
                         updateTask={this.updateTask}
                         task={this.state.renderTasks[0]}
+                        tasks={this.state.todoTasks}
                       ></SelectedTaskList>
                       ) : this.state.renderTasks.map(task => 
                         <ToDoTaskList key={task.id}
                           updateTask={this.updateTask}
                           selectTask={this.selectedTask}
                           task={task.task}
+                          id={task.id}
+                          tasks={this.state.todoTasks}
+                          allTasks={this.state.tasks}
                         ></ToDoTaskList>
                         )
                     }

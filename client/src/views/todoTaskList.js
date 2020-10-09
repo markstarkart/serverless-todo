@@ -4,28 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, 
   // faEdit, faList, 
   faDotCircle } from '@fortawesome/free-solid-svg-icons'
-// import './App.css';
 
 
 class ToDoTaskList extends Component {
   
   render() {
     return <ListGroupItem>
-    <Row>
-    <Col>
-    <Alert color="dark">{this.props.task}</Alert>
-    </Col>
-    <Col md="1">
-    <Button color="warning" onClick={() => this.props.selectTask(this.props.id)}>
-    <FontAwesomeIcon icon={faDotCircle} />
-    </Button>
-    <Button color="success" onClick={() => this.props.updateTask(this.props.id)}>
-    <FontAwesomeIcon icon={faCheckCircle} />
-    </Button>
-    </Col>
-    </Row>
+      <Row>
+        <Col>
+        < Alert color="dark">{this.props.task}</Alert>
+        </Col>
+        <Col md="1">
+          <Button color="warning" onClick={() => this.props.selectTask(this.props.allTasks, this.props.id)}>
+            <FontAwesomeIcon icon={faDotCircle} />
+          </Button>
+          <Button color="success" onClick={() => this.props.updateTask(this.props.tasks, this.props.id)}>
+          < FontAwesomeIcon icon={faCheckCircle} />
+          </Button>
+        </Col>
+      </Row>
     </ListGroupItem>
-  }}
+  };
+};
     
 export default ToDoTaskList;
 

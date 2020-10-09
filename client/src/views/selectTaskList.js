@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faEdit, faList, 
   // faDotCircle 
 } from '@fortawesome/free-solid-svg-icons'
-// import './App.css';
+
 
 class SelectedTaskList extends Component {
 
@@ -15,17 +15,13 @@ class SelectedTaskList extends Component {
           <Alert color="dark">{this.props.task.task}</Alert>
         </Col>
         <Col md="1">
-          <Button
-            color="success"
-            onClick={() => this.props.updateTask(this.props.task.id)}>
+          <Button color="success" onClick={() => this.props.updateTask(this.props.tasks, this.props.task.id)}>
             <FontAwesomeIcon icon={faCheckCircle} />
           </Button>
           <Button color="warning" onClick={() => this.props.getTasks()}>
             <FontAwesomeIcon icon={faList} />
           </Button>
-          <Button
-            color="info"
-            onClick={() => this.props.updateTask(this.props.task.id)}>
+          <Button color="info" onClick={() => this.props.updateTask(this.props.tasks, this.props.task.id)}>
             <FontAwesomeIcon icon={faEdit} />
           </Button>
         </Col>
@@ -33,5 +29,6 @@ class SelectedTaskList extends Component {
     </ListGroupItem>
   };
 };
+
 export default SelectedTaskList;
 
