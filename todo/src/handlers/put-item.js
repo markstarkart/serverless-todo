@@ -35,8 +35,11 @@ exports.putItemHandler = async (event) => {
     const result = await docClient.put(params).promise();
 
     const response = {
-        statusCode: 200,
-        body: JSON.stringify(body)
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(body),
     };
 
     // All log statements are written to CloudWatch
