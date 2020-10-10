@@ -17,6 +17,8 @@ class App extends Component {
     this.selectedTask = this.selectTask.bind(this);
     this.addTask = this.addTask.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.editTask = this.editTask.bind(this);
+
     this.state = {
       isLoading : false,
       tasks:[],
@@ -43,12 +45,28 @@ class App extends Component {
     
   }
 
+  async editTask(id, task){
+    console.log(task, id)
+    const requestOptions = {
+        method: 'PUT',
+        body: JSON.stringify({
+          id: id,
+          task: task,
+          })
+    };
+    console.log(requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+      .then(response => response.json())
+      .then(data => console.log('edittaskfetch', data));
+    this.componentDidMount();
+  }
+
   async updateTask(tasks,id){
     console.log(tasks, id)
     const task = tasks.find(task => task.id === id);
     console.log(task)
     const requestOptions = {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({
           id: id,
           task: task.task,
@@ -119,9 +137,11 @@ class App extends Component {
                     ) : this.state.renderTasks.length === 1 ? (
                       <SelectedTaskList 
                         getTasks={this.getTasks}
+                        editTask={this.editTask}
                         updateTask={this.updateTask}
                         task={this.state.renderTasks[0]}
                         tasks={this.state.todoTasks}
+                        id={this.state.renderTasks[0].id}
                       ></SelectedTaskList>
                       ) : this.state.renderTasks.map(task => 
                         <ToDoTaskList key={task.id}

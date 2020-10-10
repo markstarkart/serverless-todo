@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Button, Col,  ListGroupItem, Alert, } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faEdit, faList, 
-  // faDotCircle 
-} from '@fortawesome/free-solid-svg-icons'
-
+import { faCheckCircle, faEdit, faList, } from '@fortawesome/free-solid-svg-icons'
+import EditTask from './editTask'
 
 class SelectedTaskList extends Component {
 
@@ -21,9 +19,14 @@ class SelectedTaskList extends Component {
           <Button color="warning" onClick={() => this.props.getTasks()}>
             <FontAwesomeIcon icon={faList} />
           </Button>
-          <Button color="info" onClick={() => this.props.updateTask(this.props.tasks, this.props.task.id)}>
-            <FontAwesomeIcon icon={faEdit} />
-          </Button>
+        </Col>
+      </Row>
+      <br/>
+      <Row>
+        <Col>
+          <EditTask 
+          id={this.props.id}
+          editTask={this.props.editTask}></EditTask>
         </Col>
       </Row>
     </ListGroupItem>

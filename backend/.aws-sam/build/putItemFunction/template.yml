@@ -84,7 +84,7 @@ Resources:
           Type: Api
           Properties:
             Path: /
-            Method: Put
+            Method: PUT
   # Simple syntax to create a DynamoDB table with multiple attributes; id as primary key, task, and taskComplete with TTL enabled
   # DynamoDB table to store item: {id: string, task: string, taskComplete: number}
   ToDoListTable:

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 
-class AddTask extends Component {
+class EditTask extends Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -23,8 +23,9 @@ class AddTask extends Component {
     console.log(event.target.value)
     this.setState({value: event.target.value});
   }
-  submitTask(task, taskCount ,addTask) {
-    addTask(task,taskCount)
+  submitTask(id, newValue, editTask) {
+    console.log(id, newValue)
+    editTask(id, newValue)
     this.setState({value: ''});
   }
 
@@ -34,14 +35,14 @@ class AddTask extends Component {
     return <ListGroupItem>
       <InputGroup>
         <InputGroupAddon addonType="append">
-          <Button color="info" onClick={() => this.submitTask(this.state.value, this.props.taskCount, this.props.addTask)}>
+          <Button color="info" onClick={() => this.submitTask(this.props.id, this.state.value, this.props.editTask)}>
             <FontAwesomeIcon icon={faEdit} />
           </Button>
           </InputGroupAddon>
-        <Input placeholder="Add a Task" type="text" value={this.state.value} onChange={this.handleChange}/>
+        <Input placeholder="Edit Task" type="text" value={this.state.value} onChange={this.handleChange}/>
       </InputGroup>
     </ListGroupItem>
   };
 };
 
-export default AddTask;
+export default EditTask;
