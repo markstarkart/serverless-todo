@@ -32,16 +32,16 @@ class EditTask extends Component {
 
 
   render() { 
-    return <ListGroupItem>
+    return <div>
       <InputGroup>
         <InputGroupAddon addonType="append">
-          <Button color="info" onClick={() => this.submitTask(this.props.id, this.state.value, this.props.editTask)}>
+          <Button color="dark" onClick={() => this.submitTask(this.props.id, this.state.value, this.props.editTask)}>
             <FontAwesomeIcon icon={faEdit} />
           </Button>
           </InputGroupAddon>
         <Input placeholder="Edit Task" type="text" value={this.state.value} onChange={this.handleChange}/>
       </InputGroup>
-    </ListGroupItem>
+    </div>
   };
 };
 

@@ -71,7 +71,7 @@ class App extends Component {
         body: JSON.stringify({
           id: id,
           task: task.task,
-          taskCompleted: Date.now(),
+          taskCompleted: Math.floor(Date.now() / 1000),
           })
     };
     console.log(requestOptions)
