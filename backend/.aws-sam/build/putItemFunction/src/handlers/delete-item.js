@@ -29,10 +29,6 @@ exports.putItemHandler = async (event) => {
         TableName : tableName,
         Key: { 
           id: id
-          // ,
-          // "task": {
-          //   S: task
-          // }
         }
     };
 

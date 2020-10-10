@@ -1,0 +1,20 @@
+{
+  "name": "serverless-todo",
+  "version": "1.0.0",
+  "description": "Serverless Todo List",
+  "main": "\"\"",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy":"cd client && npm run s3 && cd ../backend && sam build && sam deploy --guided"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markstarkart/serverless-todo.git"
+  },
+  "author": "Mark Stark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markstarkart/serverless-todo/issues"
+  },
+  "homepage": "https://github.com/markstarkart/serverless-todo#readme"
+}
