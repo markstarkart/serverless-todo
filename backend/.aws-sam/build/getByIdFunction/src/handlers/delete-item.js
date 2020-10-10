@@ -11,11 +11,11 @@ const tableName = process.env.TODO_TABLE;
  * A simple example includes a HTTP post method to add one item to a DynamoDB table.
  */
 exports.putItemHandler = async (event) => {
-    if (event.httpMethod !== 'POST') {
-        if (event.httpMethod !== 'PUT'){
-            throw new Error(`postMethod only accepts POST or PUT method, you tried: ${event.httpMethod} method.`);
-        }   
-    }
+    
+  if (event.httpMethod !== 'DELETE'){
+      throw new Error(`postMethod only accepts DELETE method, you tried: ${event.httpMethod} method.`);
+  }   
+
     // All log statements are written to CloudWatch
     console.info('received:', event);
 
@@ -23,23 +23,27 @@ exports.putItemHandler = async (event) => {
     const body = JSON.parse(event.body)
     const id = body.id;
     const task = body.task;
-    const taskCompleted = body.taskCompleted;
-
     // Creates a new item, or replaces an old item with a new item
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#put-property
     const params = {
         TableName : tableName,
-        Item: { id: id, task: task, taskCompleted: taskCompleted}
+        Key: { 
+          id: id
+          // ,
+          // "task": {
+          //   S: task
+          // }
+        }
     };
 
-    const result = await docClient.put(params).promise();
+    const result = await docClient.delete(params).promise();
 
     const response = {
     statusCode: 200,
     headers: {
         "Access-Control-Allow-Headers" : "application/json",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,POST,PUT"
+        "Access-Control-Allow-Methods": "OPTIONS,DELETE"
     },
     
     body: JSON.stringify(body),

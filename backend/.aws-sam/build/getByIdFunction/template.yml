@@ -69,7 +69,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/put-item.putItemHandler
-      Description: A simple example includes a HTTP post method to add one item to a DynamoDB table.
+      Description: A simple example includes a HTTP post and put method to add or update one item to a DynamoDB table.
       Policies:
         # Give Create/Read/Update/Delete Permissions to the ToDoListTable
         - DynamoDBCrudPolicy:
@@ -85,6 +85,24 @@ Resources:
           Properties:
             Path: /
             Method: PUT
+  
+  # This is a Lambda function config associated with the source code: delete-item.js
+  deleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-item.putItemHandler
+      Description: A simple example includes a HTTP delete method to remove one item to a DynamoDB table.
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ToDoListTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ToDoListTable
+      Events:
+        DeleteTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: DELETE
+        
   # Simple syntax to create a DynamoDB table with multiple attributes; id as primary key, task, and taskComplete with TTL enabled
   # DynamoDB table to store item: {id: string, task: string, taskComplete: number}
   ToDoListTable:

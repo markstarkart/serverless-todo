@@ -54,8 +54,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/put-item.putItemHandler
-      Description: A simple example includes a HTTP post method to add one item to
-        a DynamoDB table.
+      Description: A simple example includes a HTTP post and put method to add or
+        update one item to a DynamoDB table.
       Policies:
       - DynamoDBCrudPolicy:
           TableName:
@@ -72,6 +72,23 @@ Resources:
             Path: /
             Method: PUT
       CodeUri: putItemFunction
+  deleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-item.putItemHandler
+      Description: A simple example includes a HTTP delete method to remove one item
+        to a DynamoDB table.
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: ToDoListTable
+      Events:
+        DeleteTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: DELETE
+      CodeUri: deleteItemFunction
   ToDoListTable:
     Type: AWS::DynamoDB::Table
     Properties:
