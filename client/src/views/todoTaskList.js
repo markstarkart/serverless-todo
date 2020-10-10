@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import { Row, Button, Col,  ListGroupItem, Alert, } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, 
-  // faEdit, faList, 
-  faDotCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faTrash, faDotCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 class ToDoTaskList extends Component {
@@ -20,6 +18,9 @@ class ToDoTaskList extends Component {
           </Button>
           <Button color="success" onClick={() => this.props.updateTask(this.props.tasks, this.props.id)}>
           < FontAwesomeIcon icon={faCheckCircle} />
+          </Button>
+          <Button color="danger" onClick={() => this.props.deleteTask(this.props.id)}>
+            <FontAwesomeIcon icon={faTrash} />
           </Button>
         </Col>
       </Row>

@@ -18,6 +18,7 @@ class App extends Component {
     this.addTask = this.addTask.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.editTask = this.editTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
 
     this.state = {
       isLoading : false,
@@ -80,6 +81,10 @@ class App extends Component {
     this.componentDidMount();
   }
 
+  async deleteTask(id){
+    console.log('delete', id)
+  }
+
   selectTask(tasks,id){
     console.log(tasks, id)
     const selectedTask = tasks.filter(task => task.id === id);
@@ -136,6 +141,7 @@ class App extends Component {
                       </ListGroupItem>
                     ) : this.state.renderTasks.length === 1 ? (
                       <SelectedTaskList 
+                        deleteTask={this.deleteTask}
                         getTasks={this.getTasks}
                         editTask={this.editTask}
                         updateTask={this.updateTask}
@@ -145,6 +151,7 @@ class App extends Component {
                       ></SelectedTaskList>
                       ) : this.state.renderTasks.map(task => 
                         <ToDoTaskList key={task.id}
+                          deleteTask={this.deleteTask}
                           updateTask={this.updateTask}
                           selectTask={this.selectedTask}
                           task={task.task}

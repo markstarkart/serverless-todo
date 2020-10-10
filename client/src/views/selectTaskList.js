@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Button, Col,  ListGroupItem, Alert, } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faEdit, faList, } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faTrash, faList, } from '@fortawesome/free-solid-svg-icons'
 import EditTask from './editTask'
 
 class SelectedTaskList extends Component {
@@ -18,6 +18,9 @@ class SelectedTaskList extends Component {
           </Button>
           <Button color="warning" onClick={() => this.props.getTasks()}>
             <FontAwesomeIcon icon={faList} />
+          </Button>
+          <Button color="danger" onClick={() => this.props.deleteTask(this.props.id)}>
+            <FontAwesomeIcon icon={faTrash} />
           </Button>
         </Col>
       </Row>
