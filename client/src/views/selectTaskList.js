@@ -13,7 +13,7 @@ class SelectedTaskList extends Component {
           <Alert color="dark">{this.props.task}</Alert>
         </Col>
         <Col md="1">
-          <Button color="success" onClick={() => this.props.updateTask(this.props.tasks, this.props.task.id)}>
+          <Button color="success" onClick={() => this.props.updateTask(this.props.tasks, this.props.id)}>
             <FontAwesomeIcon icon={faCheckCircle} />
           </Button>
           <Button color="warning" onClick={() => this.props.getTasks()}>
