@@ -10,7 +10,7 @@ class SelectedTaskList extends Component {
     return <ListGroupItem>
       <Row>
         <Col>
-          <Alert color="dark">{this.props.task.task}</Alert>
+          <Alert color="dark">{this.props.task}</Alert>
         </Col>
         <Col md="1">
           <Button color="success" onClick={() => this.props.updateTask(this.props.tasks, this.props.task.id)}>
@@ -28,6 +28,7 @@ class SelectedTaskList extends Component {
       <Row>
         <Col>
           <EditTask 
+          task={this.props.task}
           id={this.props.id}
           editTask={this.props.editTask}></EditTask>
         </Col>

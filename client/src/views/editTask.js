@@ -13,7 +13,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 class EditTask extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {value: this.props.task};
 
     this.handleChange = this.handleChange.bind(this);
     this.submitTask = this.submitTask.bind(this);

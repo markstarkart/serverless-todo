@@ -156,7 +156,7 @@ class App extends Component {
                         getTasks={this.getTasks}
                         editTask={this.editTask}
                         updateTask={this.updateTask}
-                        task={this.state.renderTasks[0]}
+                        task={this.state.renderTasks[0].task}
                         tasks={this.state.todoTasks}
                         id={this.state.renderTasks[0].id}
                       ></SelectedTaskList>
