@@ -1,0 +1,127 @@
+# This is the SAM template that represents the architecture of your serverless application
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Serverless Todo List
+
+Transform:
+- AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: nodejs12.x
+    Timeout: 100
+    MemorySize: 128
+    Environment:
+      Variables:
+        TODO_TABLE: !Ref ToDoListTable
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors: 
+      AllowOrigin: "'*'"
+    
+  
+Resources:
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # This is a Lambda function config associated with the source code: get-all-items.js
+  getAllItemsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-all-items.getAllItemsHandler
+      Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ToDoListTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ToDoListTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # This is a Lambda function config associated with the source code: get-by-id.js
+  getByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-by-id.getByIdHandler
+      Description: A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ToDoListTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ToDoListTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{id}
+            Method: GET
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # This is a Lambda function config associated with the source code: put-item.js
+  putItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/put-item.putItemHandler
+      Description: A simple example includes a HTTP post and put method to add or update one item to a DynamoDB table.
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ToDoListTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ToDoListTable
+      Events:
+        CreateTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+        UpdateTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: PUT
+  
+  # This is a Lambda function config associated with the source code: delete-item.js
+  deleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-item.putItemHandler
+      Description: A simple example includes a HTTP delete method to remove one item to a DynamoDB table.
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ToDoListTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ToDoListTable
+      Events:
+        DeleteTask:
+          Type: Api
+          Properties:
+            Path: /
+            Method: DELETE
+        
+  # Simple syntax to create a DynamoDB table with multiple attributes; id as primary key, task, and taskComplete with TTL enabled
+  # DynamoDB table to store item: {id: string, task: string, taskComplete: number}
+  ToDoListTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions: 
+        - AttributeName: id
+          AttributeType: S
+      KeySchema: 
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+      TimeToLiveSpecification: 
+        AttributeName: taskCompleted
+        Enabled: true
+
+Outputs:
+  WebEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
