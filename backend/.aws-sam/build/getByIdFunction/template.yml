@@ -40,7 +40,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: GET
   # Each Lambda function is defined by properties:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -78,12 +78,12 @@ Resources:
         CreateTask:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: POST
         UpdateTask:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: PUT
   
   # This is a Lambda function config associated with the source code: delete-item.js
@@ -100,7 +100,7 @@ Resources:
         DeleteTask:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: DELETE
         
   # Simple syntax to create a DynamoDB table with multiple attributes; id as primary key, task, and taskComplete with TTL enabled

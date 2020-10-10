@@ -39,7 +39,7 @@ class App extends Component {
           task: newTask
           })
     };
-    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo", requestOptions)
       .then(response => response.json())
       .then(data => console.log('addtaskfetch', data));
     this.componentDidMount();
@@ -56,7 +56,7 @@ class App extends Component {
           })
     };
     console.log(requestOptions)
-    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo", requestOptions)
       .then(response => response.json())
       .then(data => console.log('edittaskfetch', data));
     this.componentDidMount();
@@ -75,7 +75,7 @@ class App extends Component {
           })
     };
     console.log(requestOptions)
-    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo", requestOptions)
       .then(response => response.json())
       .then(data => console.log('addtaskfetch', data));
     this.componentDidMount();
@@ -90,7 +90,7 @@ class App extends Component {
           })
     };
     console.log(requestOptions)
-    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo", requestOptions)
       .then(response => response.json())
       .then(data => console.log('edittaskfetch', data));
     this.componentDidMount();
@@ -109,7 +109,7 @@ class App extends Component {
 
   async componentDidMount(){
     const repsponse = await fetch(
-      "https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/"
+      "https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo"
     )
     .then((data) => data.json());
     console.log(repsponse);

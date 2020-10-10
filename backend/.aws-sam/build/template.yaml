@@ -30,7 +30,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: GET
       CodeUri: getAllItemsFunction
   getByIdFunction:
@@ -64,12 +64,12 @@ Resources:
         CreateTask:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: POST
         UpdateTask:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: PUT
       CodeUri: putItemFunction
   deleteItemFunction:
@@ -86,7 +86,7 @@ Resources:
         DeleteTask:
           Type: Api
           Properties:
-            Path: /
+            Path: /todo
             Method: DELETE
       CodeUri: deleteItemFunction
   ToDoListTable:
