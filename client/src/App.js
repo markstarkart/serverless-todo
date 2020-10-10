@@ -32,7 +32,7 @@ class App extends Component {
      const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
-          id: `id${taskCount + 1}`,
+          id: `id${taskCount + Math.random()}`,
           task: newTask
           })
     };
