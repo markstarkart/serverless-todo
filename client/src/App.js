@@ -29,36 +29,37 @@ class App extends Component {
   async addTask(newTask, taskCount){
     console.log(newTask, taskCount)
 
-     const requestOptions = {
+    const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
           id: `id${taskCount + Math.random()}`,
           task: newTask
           })
     };
-    const repsponse = await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
       .then(response => response.json())
       .then(data => console.log('addtaskfetch', data));
     this.componentDidMount();
     
   }
 
-  updateTask(tasks,id){
+  async updateTask(tasks,id){
     console.log(tasks, id)
-    const updatedTasks = tasks.reduce((updatedTasks, task) => {
-      if (task.id === id) {
-        updatedTasks['completed'] = task;
-        updatedTasks["todo"] = tasks.filter(task => task.id !== id);
-        console.log(tasks)
-        return updatedTasks;
-      } else return updatedTasks;
-      }, {});
-    this.setState({
-      completedTasks: [...this.state.completedTasks, updatedTasks.completed],
-      todoTasks: updatedTasks.todo,
-      renderTasks:updatedTasks.todo,
-    });
-    console.log(this.state)
+    const task = tasks.find(task => task.id === id);
+    console.log(task)
+    const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          id: id,
+          task: task.task,
+          taskCompleted: Date.now(),
+          })
+    };
+    console.log(requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+      .then(response => response.json())
+      .then(data => console.log('addtaskfetch', data));
+    this.componentDidMount();
   }
 
   selectTask(tasks,id){
