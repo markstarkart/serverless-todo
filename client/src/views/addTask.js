@@ -16,13 +16,17 @@ class AddTask extends Component {
     this.state = {value: ''};
 
     this.handleChange = this.handleChange.bind(this);
+    this.submitTask = this.submitTask.bind(this);
   }
 
   handleChange(event) {
     console.log(event.target.value)
     this.setState({value: event.target.value});
   }
-
+   submitTask(task, taskCount ,addTask) {
+    addTask(task,taskCount)
+    this.setState({value: ''});
+  }
 
 
 
@@ -30,7 +34,7 @@ class AddTask extends Component {
     return <ListGroupItem>
       <InputGroup>
          <InputGroupAddon addonType="append">
-           <Button color="info" onClick={() => this.props.addTask(this.state.value, this.props.taskCount)}>
+           <Button color="info" onClick={() => this.submitTask(this.state.value, this.props.taskCount, this.props.addTask)}>
             <FontAwesomeIcon icon={faEdit} />
           </Button>
           </InputGroupAddon>

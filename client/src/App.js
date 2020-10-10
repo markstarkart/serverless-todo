@@ -16,6 +16,7 @@ class App extends Component {
     this.getTasks = this.getTasks.bind(this);
     this.selectedTask = this.selectTask.bind(this);
     this.addTask = this.addTask.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.state = {
       isLoading : false,
       tasks:[],
@@ -30,8 +31,6 @@ class App extends Component {
 
      const requestOptions = {
         method: 'POST',
-        // mode: 'cors',
-        // headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({
           id: `id${taskCount + 1}`,
           task: newTask
@@ -40,6 +39,8 @@ class App extends Component {
     const repsponse = await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
       .then(response => response.json())
       .then(data => console.log('addtaskfetch', data));
+    this.componentDidMount();
+    
   }
 
   updateTask(tasks,id){
