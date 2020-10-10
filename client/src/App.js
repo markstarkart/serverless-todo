@@ -83,6 +83,17 @@ class App extends Component {
 
   async deleteTask(id){
     console.log('delete', id)
+    const requestOptions = {
+        method: 'DELETE',
+        body: JSON.stringify({
+          id: id,
+          })
+    };
+    console.log(requestOptions)
+    await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+      .then(response => response.json())
+      .then(data => console.log('edittaskfetch', data));
+    this.componentDidMount();
   }
 
   selectTask(tasks,id){
