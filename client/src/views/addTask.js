@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import { Row, Button, Col,  ListGroupItem, Alert, } from 'reactstrap';
+import { 
+  Button, 
+  ListGroupItem,   
+  InputGroup,
+  InputGroupAddon,
+  Input,
+  } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faEdit, faList, 
-  // faDotCircle 
-} from '@fortawesome/free-solid-svg-icons'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
 
 class AddTask extends Component {
+   constructor(props) {
+    super(props);
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    console.log(event.target.value)
+    this.setState({value: event.target.value});
+  }
+
+
+
 
   render() { 
-    return <ListGroupItem> Add task
-      <Row>
-        <Col>
-          {/* <Alert color="dark">{this.props.task.task}</Alert> */}
-        </Col>
-        <Col md="1">
-          <Button color="info" onClick={() => this.props.addTask()}>
+    return <ListGroupItem>
+      <InputGroup>
+         <InputGroupAddon addonType="append">
+           <Button color="info" onClick={() => this.props.addTask(this.state.value, this.props.taskCount)}>
             <FontAwesomeIcon icon={faEdit} />
           </Button>
-        </Col>
-      </Row>
+          </InputGroupAddon>
+        <Input placeholder="Add a Task" type="text" value={this.state.value} onChange={this.handleChange}/>
+      </InputGroup>
     </ListGroupItem>
   };
 };

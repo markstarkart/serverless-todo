@@ -31,7 +31,10 @@ exports.getByIdHandler = async (event) => {
  
   const response = {
     statusCode: 200,
-    body: JSON.stringify(item)
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(item),
   };
  
   // All log statements are written to CloudWatch

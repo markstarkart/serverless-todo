@@ -22,22 +22,35 @@ class App extends Component {
       renderTasks: [],
       todoTasks: [],
       completedTasks : [],
-      newTask: {},
     };
   };
  
-  addTask(){
-    console.log('hi')
+  async addTask(newTask, taskCount){
+    console.log(newTask, taskCount)
+
+     const requestOptions = {
+        method: 'POST',
+        // mode: 'cors',
+        // headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          id: `id${taskCount + 1}`,
+          task: newTask
+          })
+    };
+    const repsponse = await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/", requestOptions)
+      .then(response => response.json())
+      .then(data => console.log('addtaskfetch', data));
   }
+
   updateTask(tasks,id){
     console.log(tasks, id)
-    const updatedTasks = tasks.reduce(({}, task) => {
+    const updatedTasks = tasks.reduce((updatedTasks, task) => {
       if (task.id === id) {
-        tasks['completed'] = task;
-        tasks["todo"] = tasks.filter(task => task.id !== id);
+        updatedTasks['completed'] = task;
+        updatedTasks["todo"] = tasks.filter(task => task.id !== id);
         console.log(tasks)
-        return tasks;
-      } else return tasks;
+        return updatedTasks;
+      } else return updatedTasks;
       }, {});
     this.setState({
       completedTasks: [...this.state.completedTasks, updatedTasks.completed],
@@ -93,7 +106,10 @@ class App extends Component {
                 <Col md="6">
                   <ListGroup className="text-center">
                     <h4>Tasks</h4>
-                    <AddTask addTask={this.addTask}></AddTask>
+                    <AddTask 
+                      addTask={this.addTask}
+                      taskCount={this.state.tasks.length}
+                    ></AddTask>
                     {this.state.todoTasks.length === 0 ? (
                       <ListGroupItem>
                         <Alert color="success">All Tasks Complete!</Alert>
