@@ -42,6 +42,12 @@ Answer Yes for these prompts.
 To run locally, goto client folder and run npm run start.
 To see you static website, goto your S3 bucket Properties Tab and get your endpoint.
 
-The drawing below illustrates the the functionality of the app.
+The image below illustrates the the functionality of the app.
 
 ![Alt text](/todoViews.jpg?raw=true "ToDoList App")
+
+Here is a high level architectural drawing of the App.
+
+![Alt text](/serverless-todo.jpg?raw=true "ToDoList App")
+
+
