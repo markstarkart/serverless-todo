@@ -8,7 +8,7 @@ You can check a task complete and then the Task will goto a Completed Tasks List
 
 To install this application you must have NodeJS 12.x, Docker, AWS CLI, and AWS SAM CLI installed on your local Dev environment.
 
-You need and AWS Account, and a user with S3, 
+You will need an AWS Account.
 You need to set up an S3 bucket for hosting static web sites. A sample bucket policy is included in the root of this repo, that need to be added to the bucket.
 
 After you download the repo locally,
