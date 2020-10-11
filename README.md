@@ -13,6 +13,7 @@ You need to set up an S3 bucket for hosting static web sites. A sample bucket po
 
 After you download the repo locally,
 add your S3 bucket name to client/package.json
+
   "scripts": {
       "start": "react-scripts start",
       "build": "react-scripts build",
@@ -21,6 +22,7 @@ add your S3 bucket name to client/package.json
       "eject": "react-scripts eject",
       "s3": "npm run build && npm run deploy"
     },
+    
 Save the file. 
 Return to the Root file.
 Run npm install.
