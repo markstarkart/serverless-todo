@@ -5,7 +5,8 @@
   "main": "\"\"",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "cd client && npm run s3 && cd ../backend && sam build && sam deploy --guided"
+    "deploy": "cd client && npm run s3 && cd ../backend && sam build && sam deploy --guided",
+    "postinstall": "(cd client && npm install); (cd backend && npm install)"
   },
   "repository": {
     "type": "git",
