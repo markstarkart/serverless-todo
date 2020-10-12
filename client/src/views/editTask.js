@@ -16,11 +16,13 @@ class EditTask extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.submitTask = this.submitTask.bind(this);
+    this.handleEnterKeyDown = this.handleEnterKeyDown.bind(this);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
   }
+  
   submitTask(id, newValue, editTask) {
     if (newValue) {
       editTask(id, newValue)
@@ -28,6 +30,11 @@ class EditTask extends Component {
     }
   }
 
+  handleEnterKeyDown(event) {
+    if (event.key === 'Enter') {
+      this.submitTask(this.props.id, this.state.value, this.props.editTask)
+    }
+  }
 
 
   render() { 
@@ -38,7 +45,13 @@ class EditTask extends Component {
             <FontAwesomeIcon icon={faEdit} />
           </Button>
           </InputGroupAddon>
-        <Input placeholder="Edit Task" type="text" value={this.state.value} onChange={this.handleChange}/>
+        <Input 
+          placeholder="Edit Task" 
+          type="text" 
+          value={this.state.value} 
+          onChange={this.handleChange}
+          onKeyDown={this.handleEnterKeyDown}
+          />
       </InputGroup>
     </div>
   };

@@ -17,16 +17,24 @@ class AddTask extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.submitTask = this.submitTask.bind(this);
+    this.handleEnterKeyDown = this.handleEnterKeyDown.bind(this);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
   }
+
   submitTask(task, taskCount ,addTask) {
-   if (task) {
+    if (task) {
     addTask(task,taskCount)
     this.setState({value: ''});
-   } 
+    } 
+  }
+
+  handleEnterKeyDown(event) {
+    if (event.key === 'Enter') {
+      this.submitTask(this.state.value, this.props.taskCount, this.props.addTask)
+    }
   }
 
 
@@ -35,11 +43,18 @@ class AddTask extends Component {
     return <ListGroupItem>
       <InputGroup>
         <InputGroupAddon addonType="append">
-          <Button color="info" onClick={() => this.submitTask(this.state.value, this.props.taskCount, this.props.addTask)}>
+          <Button color="info" 
+            onClick={() => this.submitTask(this.state.value, this.props.taskCount, this.props.addTask)}>
             <FontAwesomeIcon icon={faEdit} />
           </Button>
           </InputGroupAddon>
-        <Input placeholder="Add a Task" type="text" value={this.state.value} onChange={this.handleChange}/>
+        <Input 
+          placeholder="Add a Task" 
+          type="text" 
+          value={this.state.value} 
+          onChange={this.handleChange}
+          onKeyDown={this.handleEnterKeyDown}
+          />
       </InputGroup>
     </ListGroupItem>
   };
