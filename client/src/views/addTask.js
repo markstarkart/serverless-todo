@@ -20,7 +20,6 @@ class AddTask extends Component {
   }
 
   handleChange(event) {
-    console.log(event.target.value)
     this.setState({value: event.target.value});
   }
   submitTask(task, taskCount ,addTask) {
@@ -28,7 +27,6 @@ class AddTask extends Component {
     addTask(task,taskCount)
     this.setState({value: ''});
    } 
-  
   }
 
 

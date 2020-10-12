@@ -31,8 +31,6 @@ class App extends Component {
   };
  
   async addTask(newTask, taskCount){
-    console.log(newTask, taskCount)
-
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
@@ -44,11 +42,9 @@ class App extends Component {
       .then(response => response.json())
       .then(data => console.log('addtaskfetch', data));
     this.componentDidMount();
-    
   }
 
   async editTask(id, task){
-    console.log(task, id)
     const requestOptions = {
         method: 'PUT',
         body: JSON.stringify({
@@ -64,9 +60,7 @@ class App extends Component {
   }
 
   async updateTask(tasks,id){
-    console.log(tasks, id)
     const task = tasks.find(task => task.id === id);
-    console.log(task)
     const requestOptions = {
         method: 'PUT',
         body: JSON.stringify({
@@ -75,7 +69,6 @@ class App extends Component {
           taskCompleted: Math.floor(Date.now() / 1000),
           })
     };
-    console.log(requestOptions)
     await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo", requestOptions)
       .then(response => response.json())
       .then(data => console.log('addtaskfetch', data));
@@ -83,14 +76,12 @@ class App extends Component {
   }
 
   async deleteTask(id){
-    console.log('delete', id)
     const requestOptions = {
         method: 'DELETE',
         body: JSON.stringify({
           id: id,
           })
     };
-    console.log(requestOptions)
     await fetch("https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo", requestOptions)
       .then(response => response.json())
       .then(data => console.log('edittaskfetch', data));
@@ -98,9 +89,7 @@ class App extends Component {
   }
 
   selectTask(tasks,id){
-    console.log(tasks, id)
     const selectedTask = tasks.filter(task => task.id === id);
-    console.log('selectTask()',selectedTask)
     this.setState({ renderTasks: selectedTask, taskSelected: true });
   }
 
@@ -113,10 +102,10 @@ class App extends Component {
       "https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo"
     )
     .then((data) => data.json());
-    console.log(repsponse);
-    const todo = repsponse.filter((task) => !task.taskCompleted);
-    const complete = repsponse.filter((task) => task.taskCompleted);
-    this.setState({
+    console.log('fetchAllTasks-componentDidMount', repsponse);
+    const todo = await repsponse.filter((task) => !task.taskCompleted);
+    const complete =  await repsponse.filter((task) => task.taskCompleted);
+    await this.setState({
       tasks: repsponse,
       renderTasks: todo,
       todoTasks: todo,
