@@ -26,6 +26,7 @@ class App extends Component {
       renderTasks: [],
       todoTasks: [],
       completedTasks : [],
+      taskSelected : false,
     };
   };
  
@@ -100,11 +101,11 @@ class App extends Component {
     console.log(tasks, id)
     const selectedTask = tasks.filter(task => task.id === id);
     console.log('selectTask()',selectedTask)
-    this.setState({ renderTasks: selectedTask });
+    this.setState({ renderTasks: selectedTask, taskSelected: true });
   }
 
   getTasks(){
-    this.setState({renderTasks: this.state.todoTasks})
+    this.setState({renderTasks: this.state.todoTasks, taskSelected: false})
   }
 
   async componentDidMount(){
@@ -121,6 +122,7 @@ class App extends Component {
       todoTasks: todo,
       completedTasks: complete,
       isLoading: false,
+      taskSelected: false,
     });
   }
 
@@ -146,21 +148,19 @@ class App extends Component {
                       addTask={this.addTask}
                       taskCount={this.state.tasks.length}
                     ></AddTask>
-                    {this.state.todoTasks.length === 0 ? (
-                      <ListGroupItem>
-                        <Alert color="success">All Tasks Complete!</Alert>
-                      </ListGroupItem>
-                    ) : this.state.renderTasks.length === 1 ? (
-                      <SelectedTaskList 
-                        deleteTask={this.deleteTask}
-                        getTasks={this.getTasks}
-                        editTask={this.editTask}
-                        updateTask={this.updateTask}
-                        task={this.state.renderTasks[0].task}
-                        tasks={this.state.todoTasks}
-                        id={this.state.renderTasks[0].id}
-                      ></SelectedTaskList>
-                      ) : this.state.renderTasks.map(task => 
+                    {this.state.todoTasks.length ? 
+                      this.state.renderTasks.length === 1 && this.state.taskSelected ? (
+                        <SelectedTaskList 
+                          deleteTask={this.deleteTask}
+                          getTasks={this.getTasks}
+                          editTask={this.editTask}
+                          updateTask={this.updateTask}
+                          task={this.state.renderTasks[0].task}
+                          tasks={this.state.todoTasks}
+                          id={this.state.renderTasks[0].id}
+                        ></SelectedTaskList>
+                        ) 
+                      : this.state.renderTasks.map(task => 
                         <ToDoTaskList key={task.id}
                           deleteTask={this.deleteTask}
                           updateTask={this.updateTask}
@@ -171,6 +171,11 @@ class App extends Component {
                           allTasks={this.state.tasks}
                         ></ToDoTaskList>
                         )
+                        : (
+                        <ListGroupItem>
+                          <Alert color="success">All Tasks Complete!</Alert>
+                        </ListGroupItem>
+                        )  
                     }
                   </ListGroup>
                 </Col>
