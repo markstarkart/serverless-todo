@@ -42,3 +42,11 @@
   margin: 1px;
 
 }
+input.form-control {
+  height: 42px;
+  margin: 1px;
+}
+
+.task {
+  word-wrap: break-word;
+}

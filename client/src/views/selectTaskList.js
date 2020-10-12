@@ -10,9 +10,7 @@ class SelectedTaskList extends Component {
     return <ListGroupItem>
       <Row>
         <Col md="9">
-          <Alert color="dark" 
-          // toggle={() => this.props.updateTask(this.props.tasks, this.props.id)}
-          >{this.props.task}</Alert>
+          <Alert className="task" color="dark" >{this.props.task}</Alert>
         </Col>
         <Col md="3">
           <Row>

@@ -176,7 +176,7 @@ class App extends Component {
                         <Alert color="danger">Get To Work!</Alert>
                       </ListGroupItem>
                     ) : this.state.completedTasks.map(task => (
-                        <ListGroupItem key={task.id}><Alert color="success">{task.task}</Alert></ListGroupItem>
+                        <ListGroupItem key={task.id}><Alert className="task" color="success">{task.task}</Alert></ListGroupItem>
                       )
                     )}
                   </ListGroup>
