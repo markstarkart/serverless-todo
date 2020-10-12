@@ -19,11 +19,9 @@ class EditTask extends Component {
   }
 
   handleChange(event) {
-    console.log(event.target.value)
     this.setState({value: event.target.value});
   }
   submitTask(id, newValue, editTask) {
-    console.log(id, newValue)
     if (newValue) {
       editTask(id, newValue)
       this.setState({value: ''});
