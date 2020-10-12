@@ -103,9 +103,9 @@ class App extends Component {
     )
     .then((data) => data.json());
     console.log('fetchAllTasks-componentDidMount', repsponse);
-    const todo = repsponse.filter((task) => !task.taskCompleted);
-    const complete = repsponse.filter((task) => task.taskCompleted);
-    this.setState({
+    const todo = await repsponse.filter((task) => !task.taskCompleted);
+    const complete =  await repsponse.filter((task) => task.taskCompleted);
+    await this.setState({
       tasks: repsponse,
       renderTasks: todo,
       todoTasks: todo,
