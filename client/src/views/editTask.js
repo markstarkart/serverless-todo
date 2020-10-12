@@ -24,8 +24,10 @@ class EditTask extends Component {
   }
   submitTask(id, newValue, editTask) {
     console.log(id, newValue)
-    editTask(id, newValue)
-    this.setState({value: ''});
+    if (newValue) {
+      editTask(id, newValue)
+      this.setState({value: ''});
+    }
   }
 
 

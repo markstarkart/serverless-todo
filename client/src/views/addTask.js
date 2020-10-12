@@ -24,8 +24,11 @@ class AddTask extends Component {
     this.setState({value: event.target.value});
   }
   submitTask(task, taskCount ,addTask) {
+   if (task) {
     addTask(task,taskCount)
     this.setState({value: ''});
+   } 
+  
   }
 
 
