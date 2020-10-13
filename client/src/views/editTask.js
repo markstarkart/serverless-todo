@@ -42,7 +42,7 @@ class EditTask extends Component {
       <InputGroup>
         <InputGroupAddon addonType="append">
           <Button color="dark" onClick={() => this.submitTask(this.props.id, this.state.value, this.props.editTask)}>
-            <FontAwesomeIcon icon={faEdit} />
+            <FontAwesomeIcon icon={faEdit}/>
           </Button>
           </InputGroupAddon>
         <Input 

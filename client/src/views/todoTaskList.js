@@ -10,9 +10,7 @@ class ToDoTaskList extends Component {
     return <ListGroupItem action >
       <Row>
         <Col md="10" onClick={() => this.props.selectTask(this.props.allTasks, this.props.id)}>
-        < Alert color="dark" 
-          // toggle={() => this.props.updateTask(this.props.tasks, this.props.id)}
-          >
+        < Alert className="task" color="dark" >
           {this.props.task}
         </Alert>
         </Col>
