@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem, Alert, } from 'reactstrap';
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import ToDoTaskList from './views/todoTaskList';
 import SelectedTaskList from './views/selectTaskList';
@@ -34,7 +35,7 @@ class App extends Component {
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
-          id: `id${taskCount + Math.random()}`,
+          id: uuidv4(),
           task: newTask
           })
     };
