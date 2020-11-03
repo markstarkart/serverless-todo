@@ -31,7 +31,7 @@ class App extends Component {
     };
   };
  
-  async addTask(newTask, taskCount){
+  async addTask(newTask){
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
@@ -136,7 +136,6 @@ class App extends Component {
                     <h4>Tasks</h4>
                     <AddTask 
                       addTask={this.addTask}
-                      taskCount={this.state.tasks.length}
                     ></AddTask>
                     {this.state.todoTasks.length ? 
                       this.state.renderTasks.length === 1 && this.state.taskSelected ? (

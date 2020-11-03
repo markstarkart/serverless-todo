@@ -24,16 +24,16 @@ class AddTask extends Component {
     this.setState({value: event.target.value});
   }
 
-  submitTask(task, taskCount ,addTask) {
+  submitTask(task,addTask) {
     if (task) {
-    addTask(task,taskCount)
+    addTask(task)
     this.setState({value: ''});
     } 
   }
 
   handleEnterKeyDown(event) {
     if (event.key === 'Enter') {
-      this.submitTask(this.state.value, this.props.taskCount, this.props.addTask)
+      this.submitTask(this.state.value, this.props.addTask)
     }
   }
 
@@ -44,7 +44,7 @@ class AddTask extends Component {
       <InputGroup>
         <InputGroupAddon addonType="append">
           <Button color="info" 
-            onClick={() => this.submitTask(this.state.value, this.props.taskCount, this.props.addTask)}>
+            onClick={() => this.submitTask(this.state.value, this.props.addTask)}>
             <FontAwesomeIcon icon={faEdit} />
           </Button>
           </InputGroupAddon>
