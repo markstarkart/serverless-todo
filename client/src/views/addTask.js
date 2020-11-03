@@ -25,7 +25,7 @@ class AddTask extends Component {
   }
 
   submitTask(task,addTask) {
-    if (task) {
+    if (/^[^-\s][\w\s-]+$/.test(task)) {
     addTask(task)
     this.setState({value: ''});
     } 
