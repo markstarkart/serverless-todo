@@ -24,7 +24,7 @@ class EditTask extends Component {
   }
   
   submitTask(id, newValue, editTask) {
-    if (newValue) {
+    if (/^[^-\s][\w\s-]+$/.test(newValue)) {
       editTask(id, newValue)
       this.setState({value: ''});
     }
