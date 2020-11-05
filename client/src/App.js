@@ -135,7 +135,7 @@ class App extends Component {
                   <ListGroup className="text-center">
                     <h4>Tasks</h4>
                     <AddTask 
-                      addTask={this.addTask}
+                      // addTask={this.addTask}
                     ></AddTask>
                     {this.state.todoTasks.length ? 
                       this.state.renderTasks.length === 1 && this.state.taskSelected ? (
