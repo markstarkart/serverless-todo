@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem, Alert, } from 'reactstrap';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -20,7 +20,9 @@ class App extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.editTask = this.editTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
-
+    this.reSetTasks = this.reSetTasks.bind(this);
+    this.fetchTasks = this.fetchTasks.bind(this);
+    
     this.state = {
       isLoading : false,
       tasks:[],
@@ -98,7 +100,7 @@ class App extends Component {
     this.setState({renderTasks: this.state.todoTasks, taskSelected: false})
   }
 
-  async componentDidMount(){
+  async fetchTasks () {
     const repsponse = await fetch(
       "https://rz0xzyfjwj.execute-api.us-east-1.amazonaws.com/Prod/todo"
     )
@@ -114,6 +116,14 @@ class App extends Component {
       isLoading: false,
       taskSelected: false,
     });
+  }
+
+  componentDidMount(){
+    this.fetchTasks()
+  }
+
+  reSetTasks() {
+    this.fetchTasks();
   }
 
   render () {
@@ -134,9 +144,10 @@ class App extends Component {
                 <Col md="6">
                   <ListGroup className="text-center">
                     <h4>Tasks</h4>
-                    <AddTask 
-                      // addTask={this.addTask}
-                    ></AddTask>
+                    <AddTask
+                      reSetTasks={this.componentDidMount}
+                    >
+                    </AddTask>
                     {this.state.todoTasks.length ? 
                       this.state.renderTasks.length === 1 && this.state.taskSelected ? (
                         <SelectedTaskList 

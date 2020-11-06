@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { 
   Button, 
@@ -10,18 +10,19 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 
-function AddTask () {
-  const [task, setTask] = useState({value: '', });
+const AddTask = (props) => {
+  const [task, setTask] = useState({value: '', id: ''});
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     setTask({value: event.target.value});
   }
 
-  async function addTask(newTask){
+  const addTask = async (newTask, id) => {
+    
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
-          id: uuidv4(),
+          id: id,
           task: newTask
           })
     };
@@ -30,25 +31,29 @@ function AddTask () {
       .then(data => console.log('addtaskfetch', data));
   }
 
-  function submitTask(task,addTask) {
+  const submitTask = (task) => {
+    const newTask = {task, id: uuidv4()};
     if (/^[^-\s][\w\s-]+$/.test(task)) {
-    addTask(task);
-    setTask({value: ''});
+    addTask(newTask.task, newTask.id);
+    setTask({value: '', id: ''});
+    props.reSetTasks()
     } 
   }
 
-  function handleEnterKeyDown(event) {
+  const handleEnterKeyDown = (event) => {
     if (event.key === 'Enter') {
-      submitTask(task.value, addTask);
+      submitTask(task.value);
     }
   }
+
+  
 
   return (
     <ListGroupItem>
     <InputGroup>
       <InputGroupAddon addonType="append">
         <Button color="info" 
-          onClick={() => submitTask(task.value, addTask)}>
+          onClick={() => {submitTask(task.value)}}>
           <FontAwesomeIcon icon={faEdit} />
         </Button>
         </InputGroupAddon>
@@ -62,6 +67,6 @@ function AddTask () {
     </InputGroup>
   </ListGroupItem>
   );
-  
+
 }
 export default AddTask;
